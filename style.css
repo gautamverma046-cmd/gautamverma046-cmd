@@ -1,3 +1,12 @@
-body { font-family: Arial; text-align: center; }
-.open { color: green; font-weight: bold; }
-.closed { color: red; font-weight: bold; }
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+.open {
+  color: green;
+  font-weight: bold;
+}
+.closed {
+  color: red;
+  font-weight: bold;
+}

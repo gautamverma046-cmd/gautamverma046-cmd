@@ -1,33 +1,49 @@
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart Railway Gate Status</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Smart Railway Gate Status</h1>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCPGlkZCvQOi-6fhyQfCoQe9DjWl4Q76rA",
-    authDomain: "smart-railway-gate.firebaseapp.com",
-    databaseURL: "https://smart-railway-gate-default-rtdb.firebaseio.com",
-    projectId: "smart-railway-gate",
-    storageBucket: "smart-railway-gate.firebasestorage.app",
-    messagingSenderId: "757500214653",
-    appId: "1:757500214653:web:2c71d87db35b6862c3a014",
-    measurementId: "G-J7CGFF5GG1"
-  };
+  <p id="gate1">Gate1: Loading...</p>
+  <p id="gate2">Gate2: Loading...</p>
 
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
 
-  function updateSwitch(switchId) {
-    const dbRef = ref(db, 'gate/' + switchId);
-    onValue(dbRef, (snapshot) => {
-      const val = snapshot.val();
-      const el = document.getElementById(switchId);
-      if(el) {
-        el.textContent = switchId.toUpperCase() + ": " + val;
-        el.className = val;
-      }
-    });
-  }
+    const firebaseConfig = {
+      apiKey: "AIzaSyCPGlkZCvQOi-6fhyQfCoQe9DjWl4Q76rA",
+      authDomain: "smart-railway-gate.firebaseapp.com",
+      databaseURL: "https://smart-railway-gate-default-rtdb.firebaseio.com",
+      projectId: "smart-railway-gate",
+      storageBucket: "smart-railway-gate.firebasestorage.app",
+      messagingSenderId: "757500214653",
+      appId: "1:757500214653:web:2c71d87db35b6862c3a014",
+      measurementId: "G-J7CGFF5GG1"
+    };
 
-  updateSwitch('gate1');
-  updateSwitch('gate2');
-</script>
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    function updateSwitch(switchId) {
+      const dbRef = ref(db, 'gate/' + switchId);
+      onValue(dbRef, (snapshot) => {
+        const val = snapshot.val();
+        const el = document.getElementById(switchId);
+        if(el) {
+          el.textContent = switchId.toUpperCase() + ": " + val;
+          el.className = val;  // Will apply CSS class .open or .closed if applicable
+        }
+      });
+    }
+
+    updateSwitch('gate1');
+    updateSwitch('gate2');
+  </script>
+</body>
+</html>

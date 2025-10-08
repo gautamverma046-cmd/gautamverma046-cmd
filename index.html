@@ -1,7 +1,33 @@
-<!DOCTYPE html>
-<html>
-<body>
-<h1>Hello World</h1>
-<p>This is my GitHub Pages website.</p>
-</body>
-</html>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCPGlkZCvQOi-6fhyQfCoQe9DjWl4Q76rA",
+    authDomain: "smart-railway-gate.firebaseapp.com",
+    databaseURL: "https://smart-railway-gate-default-rtdb.firebaseio.com",
+    projectId: "smart-railway-gate",
+    storageBucket: "smart-railway-gate.firebasestorage.app",
+    messagingSenderId: "757500214653",
+    appId: "1:757500214653:web:2c71d87db35b6862c3a014",
+    measurementId: "G-J7CGFF5GG1"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  function updateSwitch(switchId) {
+    const dbRef = ref(db, 'gate/' + switchId);
+    onValue(dbRef, (snapshot) => {
+      const val = snapshot.val();
+      const el = document.getElementById(switchId);
+      if(el) {
+        el.textContent = switchId.toUpperCase() + ": " + val;
+        el.className = val;
+      }
+    });
+  }
+
+  updateSwitch('gate1');
+  updateSwitch('gate2');
+</script>
